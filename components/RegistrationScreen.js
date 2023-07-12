@@ -6,24 +6,29 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
-  Image
+  Image,
 } from "react-native";
 
-
-export default function Login() {
-
+export default function Registration() {
   return (
     <View style={styles.container}>
       <ImageBackground source={require("./assets/fone.png")} resizeMode="cover">
-      {/* <View style={styles.box}>
-          <View style={styles.photo}></View> 
-           <TouchableOpacity> 
-           <Image style={styles.img} source={require('./assets/add.png')}/>
-          </TouchableOpacity> 
-        </View>  */}
+        <View style={styles.box}>
+          <View style={styles.photo}></View>
+          <TouchableOpacity>
+            <Image style={styles.img} source={require("./assets/add.png")} />
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.form}>
-          <Text style={styles.title}>Увійти</Text>
-            <TextInput
+          <Text style={styles.title}>Реєстрація</Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText
+            // value
+            placeholder="  Логін"
+          />
+          <TextInput
             style={styles.input}
             // onChangeText
             // value
@@ -36,10 +41,10 @@ export default function Login() {
             placeholder="  Пароль"
           />
           <TouchableOpacity style={styles.buton}>
-            <Text style={styles.title_button}>Увійти</Text>
+            <Text style={styles.title_button}>Зареєструватися</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.link}>
-            <Text style={styles.title_link}>Немає акаунту? Зареєструватися</Text>
+            <Text style={styles.title_link}>Вже є акаунт? Увійти</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -50,20 +55,18 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // height: 700,
     width: 395,
     margin: 0,
     padding: 0,
   },
   form: {
-    // flex: 1,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 30,
-    marginTop: 400,
+    paddingTop: 90,
+    marginTop: 250,
     borderTopLeftRadius: 25,
-    borderTopRightRadius:25
+    borderTopRightRadius: 25,
   },
   title: {
     fontSize: 30,
@@ -104,23 +107,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  box: {    
-    zIndex: 2, 
-    position: 'absolute',
+  box: {
+    zIndex: 2,
+    position: "absolute",
     top: 190,
     left: 135,
-    
   },
   photo: {
-    width: 120, 
+    width: 120,
     height: 120,
     backgroundColor: "#E6E6E6",
     border: 1,
     borderRadius: 10,
-    borderColor: "#FF6C00"
+    borderColor: "#FF6C00",
   },
   img: {
-    position: 'absolute',
+    position: "absolute",
     width: 25,
     height: 25,
     top: -45,

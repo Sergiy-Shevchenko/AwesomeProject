@@ -6,30 +6,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
-  Image
+  Image,
 } from "react-native";
 
-
-export default function Registration() {
-
+export default function Login() {
   return (
     <View style={styles.container}>
       <ImageBackground source={require("./assets/fone.png")} resizeMode="cover">
-         <View style={styles.box}>
-          <View style={styles.photo}></View>
-          <TouchableOpacity>
-           <Image style={styles.img} source={require('./assets/add.png')}/>
-          </TouchableOpacity>
-        </View> 
-          
         <View style={styles.form}>
-          <Text style={styles.title}>Реєстрація</Text>
-          <TextInput
-            style={styles.input}
-            // onChangeText
-            // value
-            placeholder="  Логін"
-          />
+          <Text style={styles.title}>Увійти</Text>
           <TextInput
             style={styles.input}
             // onChangeText
@@ -43,10 +28,12 @@ export default function Registration() {
             placeholder="  Пароль"
           />
           <TouchableOpacity style={styles.buton}>
-            <Text style={styles.title_button}>Зареєструватися</Text>
+            <Text style={styles.title_button}>Увійти</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.link}>
-            <Text style={styles.title_link}>Вже є акаунт? Увійти</Text>
+            <Text style={styles.title_link}>
+              Немає акаунту? Зареєструватися
+            </Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -67,10 +54,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 90,
-    marginTop: 250,
+    paddingTop: 30,
+    marginTop: 400,
     borderTopLeftRadius: 25,
-    borderTopRightRadius:25
+    borderTopRightRadius: 25,
   },
   title: {
     fontSize: 30,
@@ -111,26 +98,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  box: {    
-    zIndex: 2, 
-    position: 'absolute',
+  box: {
+    zIndex: 2,
+    position: "absolute",
     top: 190,
     left: 135,
-    
   },
   photo: {
-    width: 120, 
+    width: 120,
     height: 120,
     backgroundColor: "#E6E6E6",
     border: 1,
     borderRadius: 10,
-    borderColor: "#FF6C00"
+    borderColor: "#FF6C00",
   },
   img: {
-    position: 'absolute',
+    position: "absolute",
     width: 25,
     height: 25,
     top: -45,
     left: 105,
-  }
+  },
 });
