@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  Image
 } from "react-native";
 
 
@@ -14,7 +15,12 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <ImageBackground source={require("./assets/fone.png")} resizeMode="cover">
-                 
+      {/* <View style={styles.box}>
+          <View style={styles.photo}></View> 
+           <TouchableOpacity> 
+           <Image style={styles.img} source={require('./assets/add.png')}/>
+          </TouchableOpacity> 
+        </View>  */}
         <View style={styles.form}>
           <Text style={styles.title}>Увійти</Text>
             <TextInput
@@ -54,8 +60,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 90,
-    marginTop: 250,
+    paddingTop: 30,
+    marginTop: 400,
     borderTopLeftRadius: 25,
     borderTopRightRadius:25
   },
@@ -97,5 +103,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
+  },
+  box: {    
+    zIndex: 2, 
+    position: 'absolute',
+    top: 190,
+    left: 135,
+    
+  },
+  photo: {
+    width: 120, 
+    height: 120,
+    backgroundColor: "#E6E6E6",
+    border: 1,
+    borderRadius: 10,
+    borderColor: "#FF6C00"
+  },
+  img: {
+    position: 'absolute',
+    width: 25,
+    height: 25,
+    top: -45,
+    left: 105,
   },
 });

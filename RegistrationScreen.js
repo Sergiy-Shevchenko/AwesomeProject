@@ -16,9 +16,9 @@ export default function Registration() {
     <View style={styles.container}>
       <ImageBackground source={require("./assets/fone.png")} resizeMode="cover">
          <View style={styles.box}>
-         
+          <View style={styles.photo}></View>
           <TouchableOpacity>
-            <Image style={styles.img} source={require('./assets/plus.svg')}/>
+           <Image style={styles.img} source={require('./assets/add.png')}/>
           </TouchableOpacity>
         </View> 
           
@@ -111,17 +111,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  box: {
-    width: 132, 
-    height: 120, 
-    backgroundColor: "#1B4371",
+  box: {    
+    zIndex: 2, 
     position: 'absolute',
-    top: 200,
-    left: 140,
-    borderRadius: 10
+    top: 190,
+    left: 135,
+    
+  },
+  photo: {
+    width: 120, 
+    height: 120,
+    backgroundColor: "#E6E6E6",
+    border: 1,
+    borderRadius: 10,
+    borderColor: "#FF6C00"
   },
   img: {
-    width: 16,
-    height: 16
+    position: 'absolute',
+    width: 25,
+    height: 25,
+    top: -45,
+    left: 105,
   }
 });
