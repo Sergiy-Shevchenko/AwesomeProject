@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { TouchableWithoutFeedback } from "react-native";
 import {
   View,
   Text,
@@ -7,64 +8,105 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  Alert
 } from "react-native";
 
 export default function Registration() {
+
+  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  
+  const onLogin = () => {
+    Alert.alert("Registration info", `Login: ${login}, E-mail: ${email}, Password: ${password}`);
+    console.log(login)
+    console.log(email)
+    console.log(password)
+  };
+
   return (
+   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
     <View style={styles.container}>
-      <ImageBackground source={require("./assets/fone.png")} resizeMode="cover">
+ 
+      <ImageBackground source={require("../components/img/fone.png")} resizeMode="cover">
+       <KeyboardAvoidingView  behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+        {/* <View style={styles.box}>
+          <View style={styles.photo}></View>
+          <TouchableOpacity>
+            <Image style={styles.img} source={require("../components/img/add.png")} />
+          </TouchableOpacity>
+        </View> */}
+
+        <View style={styles.form}>
         <View style={styles.box}>
           <View style={styles.photo}></View>
           <TouchableOpacity>
-            <Image style={styles.img} source={require("./assets/add.png")} />
+            <Image style={styles.img} source={require("../components/img/add.png")} />
           </TouchableOpacity>
         </View>
-
-        <View style={styles.form}>
-          <Text style={styles.title}>Реєстрація</Text>
+<Text style={styles.title}>Реєстрація</Text>
+ 
           <TextInput
             style={styles.input}
-            // onChangeText
-            // value
+            onChangeText={setLogin}
+            value={login}
             placeholder="  Логін"
           />
           <TextInput
             style={styles.input}
-            // onChangeText
-            // value
+            onChangeText={setEmail}
+            value={email}
             placeholder="  Адреса електронної пошти"
           />
           <TextInput
             style={styles.input}
-            // onChangeText
-            // value
+            onChangeText={setPassword}
+            value={password}
+            secureTextEntry
             placeholder="  Пароль"
           />
-          <TouchableOpacity style={styles.buton}>
+           
+          <TouchableOpacity style={styles.buton} onPress={onLogin}>
             <Text style={styles.title_button}>Зареєструватися</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.link}>
             <Text style={styles.title_link}>Вже є акаунт? Увійти</Text>
           </TouchableOpacity>
+
+         
+          
         </View>
+     </KeyboardAvoidingView>
       </ImageBackground>
+         
     </View>
+   </TouchableWithoutFeedback>
+    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: 700,
     width: 395,
+    // alignItems: "center",
+    // justifyContent: "center",
     margin: 0,
     padding: 0,
+
   },
   form: {
+    // flex:1,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 90,
-    marginTop: 250,
+    paddingTop: 10,
+    marginTop: 230,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
@@ -72,7 +114,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 500,
     textAlign: "center",
-    marginBottom: 25,
+    marginTop:25,
+    paddingBottom: 25,
     borderRadius: 50,
   },
   title_button: {
@@ -87,6 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E6E6E6",
     width: 343,
     height: 50,
+    paddingLeft: 15,
     marginTop: 10,
     borderWidth: 1,
     borderRadius: 6,
@@ -108,10 +152,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   box: {
-    zIndex: 2,
-    position: "absolute",
-    top: 190,
-    left: 135,
+    marginTop: -60,
+    // zIndex: 2,
+    // position: "absolute",
+    // top: 170,
+    // left: 135,
   },
   photo: {
     width: 120,

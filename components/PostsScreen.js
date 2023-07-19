@@ -8,19 +8,19 @@ export default function Posts() {
         <Text style={styles.title}>Публікації</Text>
 
         <TouchableOpacity style={styles.button}>
-          <Image source={require("./assets/log-out.png")} />
+          <Image source={require("../components/img/log-out.png")} />
         </TouchableOpacity>
       </View>
       <View style={styles.body}></View>
       <View style={styles.footer}>
         <TouchableOpacity>
-          <Image source={require("./assets/grid.png")} />
+          <Image source={require("../components/img/grid.png")} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image source={require("./assets/new.png")} />
+          <Image source={require("../components/img/new.png")} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image source={require("./assets/user.png")} />
+          <Image source={require("../components/img/user.png")} />
         </TouchableOpacity>
       </View>
     </View>
