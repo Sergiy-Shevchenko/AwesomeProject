@@ -1,3 +1,4 @@
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   View,
@@ -13,26 +14,34 @@ import {
   Alert
 } from "react-native";
 
-export default function Login() {
+export default Login = () => {
 
+  
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
 
+  const navigation = useNavigation();
+  // const {params: {userEmail, userPassword}} = useRoute();
+
   const onLogin = () => {
-    Alert.alert("Login info", `Email: ${email},  Password: ${password}`);
+    //Alert.alert("Login info", `Email: ${email},  Password: ${password}`);
+    navigation.navigate("Home")
+    setEmail('')
+    setPassword('')
     console.log(email);
     console.log(password);
   }
 
   return (
     
-       <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-
+       
+        <TouchableWithoutFeedback  onPress={Keyboard.dismiss}>
+         <View style={styles.container}>
+      <KeyboardAvoidingView  behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
       <ImageBackground style={styles.fone} source={require("../components/img/fone.png")} resizeMode="cover">
       
         <View style={styles.form}>
-          <KeyboardAvoidingView  behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+          
           <Text style={styles.title}>Увійти</Text>
           <TextInput
             style={styles.input}
@@ -50,16 +59,19 @@ export default function Login() {
             <Text style={styles.title_button}>Увійти</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.link}>
-            <Text style={styles.title_link}>
+            <Text style={styles.title_link} 
+            onPress={()=> navigation.navigate("Registration")}>
               Немає акаунту? Зареєструватися
             </Text>
           </TouchableOpacity>
-            </KeyboardAvoidingView>
+            
         </View>        
         
       </ImageBackground>
+      </KeyboardAvoidingView>
+        </View>
        </TouchableWithoutFeedback>
-    </View>
+  
    
    
   );
@@ -68,27 +80,32 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 700,
+    // height: 700,
     width: 395,
-    margin: 0,
-    padding: 0,
+    // margin: 0,
+    // padding: 0,
+    // flexDirection: 'column' 
   },
   form: {
-    // flex: 1,
+    // flex: 2,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 60,
-    marginTop: 300,
+    paddingTop: 20,
+    marginTop: 350,
+    paddingBottom:100,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+    
   },
   title: {
     fontSize: 30,
     fontWeight: 500,
     textAlign: "center",
-    marginBottom: 25,
+    paddingTop: 20,
+    paddingBottom: 25,
     borderRadius: 50,
+    color: '#1B4371',
   },
   title_button: {
     fontSize: 16,
@@ -123,12 +140,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  // fone: {
-// position: 'absolute',
+  fone: {
+    // flex:6,
+// position: 'relative',
+// top:0,
+//left:-12,
+margin:0,
+padding:0, 
 // width: '100%',
 // height: '100%',
 // width: flattenedStyle?.width,
-  // },
+  },
   // box: {
   //   zIndex: 2,
   //   position: "absolute",
