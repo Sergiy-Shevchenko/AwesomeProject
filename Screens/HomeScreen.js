@@ -1,114 +1,136 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  TouchableOpacity,
-  Image,
-} from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import PostsScreen from "./PostsScreen.js";
-import CreatePostsScreen from "./CreatePostScreen.js";
-import { useNavigation, NavigationContainer } from "@react-navigation/native";
 import ProfileScreen from "./ProfileScreen.js";
+import CreatePostScreen from "./CreatePostScreen.js";
 
-// const PostsScreen = ({navigation}) => {
-//   return (
-//     // <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//       <TouchableOpacity
-//               style={styles.button}
-//               onPress={() => navigation.navigate("PostsScreen")}
-//             >
-//               <Image source={require("../components/img/grid.png")} />
-//             </TouchableOpacity>
-//     // </View>
-//   );
-// }
+const Tab = createBottomTabNavigator();
 
-// function Profile() {
-//   return (
-//     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//       <Text>Profile!</Text>
-//     </View>
-//   );
-// }
-
-const Tabs = createBottomTabNavigator();
-
-const Home = () => {
+export default Home = () => {
   return (
-    
-    <Tabs.Navigator
-    screenOptions={{  
-      tabBarShowLabel: false,
-      tabBarStyle: {
-        position: "absolute",
-        height: 84,
-        paddingTop: 8,
-        alignItems: "center",
-        borderTopWidth: 1,
-        borderTopColor: "#E8E8E8",
-      },
-      tabBarItemStyle: {
-        flex: 1,
-        maxWidth: 40,
-        height: 40,
-        justifyContent: "center",
-        alignItems: "center",
-        // backgroundColor: "transparent",
-      },
-      }}>
-    
-      <Tabs.Screen
-        name="PostsScreen"
+    <Tab.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          position: "absolute",
+          height: 84,
+          paddingTop: 8,
+          alignItems: "center",
+          borderTopWidth: 1,
+          borderTopColor: "#E8E8E8",
+        },
+      }}
+    >
+      <Tab.Screen
+        name="Post"
         component={PostsScreen}
         options={{
           headerShown: false,
-          // tabBarButton: () => {
-            // <TouchableOpacity
-            //   style={styles.button}
-            //   onPress={() => navigation.navigate("Login")}
-            // >
-            //   <Image source={require("../components/img/log-out.png")} />
-            // </TouchableOpacity>
-          // }
+          tabBarIcon: ({ size, focused }) => (
+            <Ionicons
+              name="grid"
+              color="#E8E8E8"
+              size={size}
+              style={{
+                color: focused ? "#FF6C00" : "#E8E8E8",
+              }}
+            />
+          ),
+
+          //  tabBarIcon: ({focused}) => (
+          //   <View style={{
+          //     alignItems: "center",
+          //     justifyContent: "center",
+          //     // top: 10
+          //   }}>
+          //      <Image
+          //             source={require("../components/img/grid.png")}
+          //             style={{
+          //               resizeMode: 'contain',
+          //               width: 40,
+          //               height: 40,
+          //             //   tintColor: focused ? '#FF6C00' : '#BDBDBD',
+          //              }}
+          //           />
+          //   </View>
+          //  )
         }}
-screenOptions={({ route }) => ({
-          tabBarIcon: () => {
-           return (<Image source={require("../components/img/grid.png")} />)
-          },
-        })}
-
-
       />
-      <Tabs.Screen
-        name="CreatePostsScreen"
-        component={CreatePostsScreen}
+      <Tab.Screen
+        name="Публікації"
+        component={CreatePostScreen}
         options={{
-          headerShown: false,          
-        }}
-        />
+          headerShown: false,
+          tabBarStyle: { display: "none" },
+          tabBarIcon: ({ size, focused }) => (
+            <AntDesign
+              name="pluscircleo"
+              color="#E8E8E8"
+              size={size}
+              style={{
+                color: focused ? "#FF6C00" : "#E8E8E8",
+              }}
+            />
+          ),
 
-        <Tabs.Screen
-        name="ProfileScreen"
+          // tabBarIcon: ({focused}) => (
+          //   <View style={{
+          //     alignItems: "center",
+          //     justifyContent: "center",
+          //     // top: 10
+          //   }}>
+          //      <Image
+          //             source={require("../components/img/new.png")}
+          //              style={{
+          //               resizeMode: 'contain',
+          //               width: 50,
+          //               height: 30,
+
+          //             //   tintColor: focused ? '#FF6C00' : '#BDBDBD',
+          //              }}
+          //           />
+          //   </View>
+          //  )
+        }}
+      />
+      <Tab.Screen
+        name="Профіль"
         component={ProfileScreen}
         options={{
-          headerShown: false,          
+          headerShown: false,
+          tabBarIcon: ({ size, focused }) => (
+            <AntDesign
+              name="user"
+              color="#E8E8E8"
+              size={size}
+              style={{
+                color: focused ? "#FF6C00" : "#E8E8E8",
+              }}
+            />
+          ),
+
+          // tabBarIcon: ({focused}) => (
+          //   <View style={{
+          //     alignItems: "center",
+          //     justifyContent: "center",
+          //     // top: 10
+          //   }}>
+          //      <Image
+
+          //             source={require("../components/img/user.png")}
+          //             style={{
+          //               resizeMode: 'contain',
+          //               width: 25,
+          //               height: 25,
+          //               // tintColor: focused ? '#FF6C00' : '#BDBDBD',
+          //              }}
+          //           />
+          //   </View>
+          //  )
         }}
-        
       />
-    </Tabs.Navigator>
+    </Tab.Navigator>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
-
-export default Home;

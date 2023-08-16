@@ -10,7 +10,7 @@ export default function CreatePostScreen() {
       <View style={styles.header}>
   <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate("PostsScreen")}
+              onPress={() => navigation.navigate("Post")}
             >
               <Image source={require("../components/img/arrow-left.png")} />
             </TouchableOpacity>

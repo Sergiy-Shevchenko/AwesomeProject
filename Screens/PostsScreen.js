@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, useNavigation, useRoute } from "@react-navigation/native";
 import {  View, Text, StyleSheet, TouchableOpacity, Image, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+
 
 //-------------------------------------------------------------------
 export default function PostsScreen() {

@@ -16,7 +16,7 @@ import {
 
 export default Login = () => {
 
-  
+  const[login, setLogin] = useState()
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
 
@@ -25,7 +25,7 @@ export default Login = () => {
 
   const onLogin = () => {
     //Alert.alert("Login info", `Email: ${email},  Password: ${password}`);
-    navigation.navigate("Home")
+    navigation.navigate("Home", )
     setEmail('')
     setPassword('')
     console.log(email);
