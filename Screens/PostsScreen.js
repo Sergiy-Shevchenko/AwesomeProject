@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  NavigationContainer,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -15,39 +10,26 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
-import {
-  AntDesign,
-  Feather,
-  MaterialIcons,
-  Ionicons,
-  EvilIcons,
-} from "@expo/vector-icons";
+import { Feather, EvilIcons } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
 
-//-------------------------------------------------------------------
 export default PostsScreen = ({ route }) => {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
     if (route.params) {
-      const { photo, photoName, photoLocation, photoMap} = route.params;
+      const { photo, photoName, photoLocation, photoMap } = route.params;
       const newPost = {
         id: new Date(),
         title: photoName,
         picture: photo,
         locationName: photoLocation,
         location: photoMap,
-
-      }; 
-      
-      console.log(photoMap);
+      };
       setData((prev) => [newPost, ...prev]);
     }
   }, [route]);
-
- 
-
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -80,31 +62,37 @@ export default PostsScreen = ({ route }) => {
                 <Text style={styles.item_title}>{item.title}</Text>
                 <View style={styles.comment_location}>
                   <View style={styles.comment}>
-                    <TouchableOpacity onPress={()=> navigation.navigate("Comments")}>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("Comments")}
+                    >
                       <EvilIcons
-                      style={styles.location_icon}
-                      name="comment"
-                      color="#BDBDBD"
-                      size={36}
-                    />
-
+                        style={styles.location_icon}
+                        name="comment"
+                        color="#BDBDBD"
+                        size={36}
+                      />
                     </TouchableOpacity>
-                    
                   </View>
                   <View style={styles.location}>
-                    <TouchableOpacity onPress={()=> navigation.navigate("Map", { location: item.location })}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("Map", { location: item.location })
+                      }
+                    >
                       <Feather
-                      style={styles.location_icon}
-                      name="map-pin"
-                      color="#BDBDBD"
-                      size={24}
-                    />
-
+                        style={styles.location_icon}
+                        name="map-pin"
+                        color="#BDBDBD"
+                        size={24}
+                      />
                     </TouchableOpacity>
-                    
-                    <Text style={{
-               marginLeft: 10,
-                }}>{item.locationName}</Text>
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                      }}
+                    >
+                      {item.locationName}
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -180,16 +168,14 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     paddingTop: 5,
   },
-  comment_location: {    
+  comment_location: {
     flexDirection: "row",
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     paddingTop: 3,
     paddingBottom: 5,
-
-
   },
   location: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
 
   footer: {

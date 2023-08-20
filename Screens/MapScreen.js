@@ -1,46 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import React from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
 import { useRoute } from "@react-navigation/native";
 
 const MapScreen = () => {
-
-
-const {
+  const {
     params: { location },
   } = useRoute();
-  
-//  console.log(location);
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-      }
-    
-    })();
-  }, []);
-
-
 
   return (
     <View style={styles.container}>
       <MapView
         style={styles.mapStyle}
         region={{
-          ...location,          
+          ...location,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
-
         }}
         showsUserLocation={true}
         mapType="standard"
         minZoomLevel={15}
       >
         {location && (
-          <Marker title="Місце фото" coordinate={location} description="Вітаю!" />
+          <Marker
+            title="Місце фото"
+            coordinate={location}
+            description="Вітаю!"
+          />
         )}
       </MapView>
     </View>
