@@ -4,6 +4,9 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import PostsScreen from "./PostsScreen.js";
 import ProfileScreen from "./ProfileScreen.js";
 import CreatePostScreen from "./CreatePostScreen.js";
+import CommentsScreen from "./CommentsScreen.js";
+import MapScreen from "./MapScreen.js";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -37,28 +40,10 @@ export default Home = () => {
               }}
             />
           ),
-
-          //  tabBarIcon: ({focused}) => (
-          //   <View style={{
-          //     alignItems: "center",
-          //     justifyContent: "center",
-          //     // top: 10
-          //   }}>
-          //      <Image
-          //             source={require("../components/img/grid.png")}
-          //             style={{
-          //               resizeMode: 'contain',
-          //               width: 40,
-          //               height: 40,
-          //             //   tintColor: focused ? '#FF6C00' : '#BDBDBD',
-          //              }}
-          //           />
-          //   </View>
-          //  )
         }}
       />
       <Tab.Screen
-        name="Публікації"
+        name="Create"
         component={CreatePostScreen}
         options={{
           headerShown: false,
@@ -73,29 +58,10 @@ export default Home = () => {
               }}
             />
           ),
-
-          // tabBarIcon: ({focused}) => (
-          //   <View style={{
-          //     alignItems: "center",
-          //     justifyContent: "center",
-          //     // top: 10
-          //   }}>
-          //      <Image
-          //             source={require("../components/img/new.png")}
-          //              style={{
-          //               resizeMode: 'contain',
-          //               width: 50,
-          //               height: 30,
-
-          //             //   tintColor: focused ? '#FF6C00' : '#BDBDBD',
-          //              }}
-          //           />
-          //   </View>
-          //  )
         }}
       />
       <Tab.Screen
-        name="Профіль"
+        name="Profile"
         component={ProfileScreen}
         options={{
           headerShown: false,
@@ -109,25 +75,28 @@ export default Home = () => {
               }}
             />
           ),
-
-          // tabBarIcon: ({focused}) => (
-          //   <View style={{
-          //     alignItems: "center",
-          //     justifyContent: "center",
-          //     // top: 10
-          //   }}>
-          //      <Image
-
-          //             source={require("../components/img/user.png")}
-          //             style={{
-          //               resizeMode: 'contain',
-          //               width: 25,
-          //               height: 25,
-          //               // tintColor: focused ? '#FF6C00' : '#BDBDBD',
-          //              }}
-          //           />
-          //   </View>
-          //  )
+        }}
+      />
+      <Tab.Screen
+        name="Comments"
+        component={CommentsScreen}
+        options={{
+          headerShown: false,
+          tabBarStyle: { display: "none" },
+          tabBarItemStyle: {
+            display: "none",
+          },
+        }}
+      />
+       <Tab.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          headerShown: false,
+          tabBarStyle: { display: "none" },
+          tabBarItemStyle: {
+            display: "none",
+          },
         }}
       />
     </Tab.Navigator>

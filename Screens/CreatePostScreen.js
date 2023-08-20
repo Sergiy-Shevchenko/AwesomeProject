@@ -1,76 +1,269 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  ButtonText,
+  Alert
+} from "react-native";
+import { AntDesign, Feather, MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+import * as Location from "expo-location";
 
-export default function CreatePostScreen() {
+export default CreatePostScreen = () => {
   const navigation = useNavigation();
+
+  
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+
+  const[photo, setPhoto] = useState(''); 
+  const[photoId, setPhotoId] = useState(null);
+  
+  
+  const[photoName, setPhotoName] = useState('');
+  const[photoLocation, setPhotoLocation] = useState('');
+
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  const addPhotoLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    
+    if (status !== "granted") {
+      console.log("Permission to access location was denied");
+    }
+    let location = await Location.getCurrentPositionAsync({});
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    setLocation(coords);
+  };
+
+  const takePhoto = async() => {
+    if(cameraRef) {
+       const {uri} = await cameraRef.takePictureAsync();
+        const {id} = await MediaLibrary.createAssetAsync(uri);
+        setPhoto(uri);
+        setPhotoId(id);
+        addPhotoLocation();       
+    }       
+  }
+   
+  const editPhoto = () => {
+    setPhoto(null);
+    MediaLibrary.deleteAssetsAsync(photoId);
+  }
+
+  const addPost = () => {
+
+    // if(!photo){
+    //   return Alert.alert('Додай фото')
+    // }
+    // if(!photoName) {
+    //   return Alert.alert('Додай назву')
+    // }
+    // if(!photoLocation) {
+    //   return Alert.alert('Додай місцевість')
+    // }
+ 
+
+
+
+    navigation.navigate("Post", {photo, photoName, photoLocation,  photoMap: location});
+    setPhoto('');
+    setPhotoName('');
+    setPhotoLocation('');
+
+// console.log(photoMap);
+
+  }
+
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return (
+      <View>
+        <Text>No access to camera</Text>;
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-    
       <View style={styles.header}>
-  <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate("Post")}
-            >
-              <Image source={require("../components/img/arrow-left.png")} />
-            </TouchableOpacity>
-
+        <TouchableOpacity style={styles.buttonGoBack}        
+          onPress={() => navigation.navigate("Post")}
+        >
+       <AntDesign name="arrowleft"
+              color="#BDBDBD"
+              size={24} 
+        />
+        </TouchableOpacity>
         <Text style={styles.title}>Створити публікацію</Text>
       </View>
-      <View style={styles.body}>        
-          <View style={styles.image_container}> 
-            <View style={styles.image}>
-              <Image
-                style={styles.image_icon}
-                source={require("../components/img/Group1.png")}
-              />
-            </View>
-            <TouchableOpacity >
-              <Text style={styles.button_title}>Завантажити фото</Text>
+      <View style={styles.body}>
+      
+        <Camera style={styles.camera} type={type} ref={setCameraRef}>
+          <View style={styles.photoView}>
+            <TouchableOpacity
+              style={styles.flipContainer}
+              onPress={() => {
+                setType(
+                  type === Camera.Constants.Type.back
+                    ? Camera.Constants.Type.front
+                    : Camera.Constants.Type.back
+                );
+              }}
+            >
+              <Ionicons 
+              name="camera-reverse-outline"
+              color="#FFFFFF"
+              size={32} 
+        />
+
+            </TouchableOpacity>
+            {photo && ( <View style={styles.takePhotoInner}>
+              <Image source={{uri: photo}} style={{
+                height: 290,
+                width: 330,
+                }}/>
+            </View>)}
+           
+            <TouchableOpacity
+              style={styles.button}
+              onPress={takePhoto}             
+              // {async () => {
+              //   if (cameraRef) {
+              //     const { uri } = await cameraRef.takePictureAsync();
+              //     await MediaLibrary.createAssetAsync(uri);
+              //   }
+              // }}
+            >
+              <View style={styles.takePhotoOut}>
+              <MaterialIcons name="photo-camera"
+              color="#BDBDBD"
+              size={32} 
+        />
+             
+              </View>
             </TouchableOpacity>
           </View>
-        <View style={styles.input_container}> 
-                <View style={styles.input_section}>
+        </Camera>
+            <TouchableOpacity onPress={editPhoto}>
+              <Text style={styles.camera_title}>{photo === null ? "Завантажити фото" : "Редагувати фото"}</Text>
+            </TouchableOpacity>       
+        <View style={styles.input_container}>
+          <View style={styles.input_section}>
             <TextInput
-            style={styles.input}
-            // onChangeText={setEmail}
-            // value={email}
-            placeholder="Назва..."
-          />
+              style={styles.input}
+              onChangeText={setPhotoName}
+              value={photoName}
+              placeholder="Назва..."
+            />
           </View>
-          <View  style={styles.input_section}>
-          <Image
-                style={styles.location_icon}
-                source={require("../components/img/map-pin.png")}
-              />
+          <View style={styles.input_section}>
+          <Feather 
+           style={styles.location_icon}
+          name="map-pin"
+              color="#BDBDBD"
+              size={24} 
+        />
             <TextInput
-            style={styles.input}
-            // onChangeText={setPassword}
-            // value={password}
-            placeholder="Місцевість..."
- 
-          />
+              style={styles.input}
+              onChangeText={setPhotoLocation}
+              value={photoLocation}
+              placeholder="Місцевість..."
+            />
           </View>
-          
+
+          <TouchableOpacity style={styles.post_add} onPress={addPost} >
+            <Text style={styles.button_title}>Опублікувати</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.post_add}>
-              <Text style={styles.button_title}>Опублікувати</Text>
-            </TouchableOpacity>
       </View>
+
       <View style={styles.footer}>
-        <TouchableOpacity>
-          <Image source={require("../components/img/trash.png")} />
+        <TouchableOpacity style={styles.button_trash} onPress>
+        <Feather 
+              name="trash-2"
+              color="#BDBDBD"
+              size={32} 
+        />
         </TouchableOpacity>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: 390,
+  container: { 
+    flex: 1 
   },
+  //  width: 390,
+  camera: {
+    // flex: 1
+    height: 320,
+    borderRadius: 15,
+  },
+  photoView: {
+    borderRadius: 25,
+    backgroundColor: "transparent",
+    justifyContent: "flex-end",
+  },
+  flipContainer: {
+    position: "absolute",
+    top:5,
+    left: 320,    
+  },
+  button: {
+    alignSelf: "center",
+    paddingTop: "65%",
+    paddingBottom: "35%",
+  },
+
+  takePhotoOut: {
+    borderWidth: 2,
+    borderColor: "white",
+    height: 50,
+    width: 50,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+
+  takePhotoInner: {
+    position: "absolute",
+    top:15,
+    left: 15,
+    borderWidth: 2,
+    borderColor: "white",
+
+    // height: 30,
+    // width: 30,
+    // backgroundColor: "white",
+    // justifyContent: "center",
+    // alignItems: "center",  
+  },
+
   header: {
     flex: 1,
     width: "100%",
@@ -87,11 +280,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   body: {
-    paddingTop: 30,
-    paddingLeft:25,
-    paddingRight: 25,
+    paddingTop: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
     flex: 13,
-    
   },
   image_container: {
     width: 343,
@@ -106,7 +298,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E8E8E8",
   },
   image_icon: {},
-  button: {
+  buttonGoBack: {
     position: "absolute",
     top: 50,
     left: 15,
@@ -115,10 +307,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     fontWeight: 400,
+    color: "#FFFFFF",
+  },
+  camera_title: {
+    fontSize: 16,
+    fontWeight: 400,
+    paddingTop:10,
     color: "#BDBDBD",
   },
   input_container: {
-    marginTop: 50,
+    marginTop: 30,
   },
   input: {
     fontSize: 16,
@@ -134,17 +332,17 @@ const styles = StyleSheet.create({
     borderBottomColor: "#BDBDBD",
   },
   location_icon: {
-   marginRight:5,
+    marginRight: 5,
     marginTop: 25,
   },
   post_add: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50,
+    marginTop: 30,
     paddingTop: 8,
     paddingBottom: 15,
-    backgroundColor: "#E8E8E8",
-    borderRadius: 50
+    backgroundColor: "#FF6C00",
+    borderRadius: 50,
   },
   footer: {
     flex: 1,
@@ -158,5 +356,13 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     justifyContent: "space-around",
     alignItems: "center",
+  },
+  button_trash: {
+    width: 70,
+    height: 40,
+    borderWidth: 2,
+    borderColor: "#E6E6E6",
+    borderRadius: 50,
+    alignItems: "center"
   },
 });
