@@ -27,7 +27,7 @@ export default CreatePostScreen = () => {
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState(null);
   const [photoId, setPhotoId] = useState(null);
 
   const [photoName, setPhotoName] = useState("");
@@ -72,6 +72,14 @@ export default CreatePostScreen = () => {
     setPhoto(null);
     MediaLibrary.deleteAssetsAsync(photoId);
   };
+
+  const resetData = () => {
+    setPhoto(null);
+    setPhotoName("");
+    setPhotoLocation("");
+      
+  }
+
 
   const addPost = () => {
     if (!photo) {
@@ -197,13 +205,10 @@ export default CreatePostScreen = () => {
             <Text style={styles.button_title}>Опублікувати</Text>
           </TouchableOpacity>
         </View>
-      </View>
-
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.button_trash} onPress>
+         <TouchableOpacity style={styles.button_trash} onPress={resetData}>
           <Feather name="trash-2" color="#BDBDBD" size={32} />
         </TouchableOpacity>
-      </View>
+      </View>     
     </View>
   );
 };
@@ -358,6 +363,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#E6E6E6",
     borderRadius: 50,
+    justifyContent: "center",
     alignItems: "center",
+    marginTop:30,
+    marginLeft: "auto",
+    marginRight: "auto",
+
   },
 });
