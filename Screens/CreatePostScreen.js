@@ -9,6 +9,8 @@ import {
   TextInput,
   ButtonText,
   Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import {
   AntDesign,
@@ -77,9 +79,7 @@ export default CreatePostScreen = () => {
     setPhoto(null);
     setPhotoName("");
     setPhotoLocation("");
-      
-  }
-
+  };
 
   const addPost = () => {
     if (!photo) {
@@ -101,6 +101,14 @@ export default CreatePostScreen = () => {
     setPhoto("");
     setPhotoName("");
     setPhotoLocation("");
+
+
+    // navigation.navigate("Profile", {
+    //   photo,
+    //   photoName,
+    //   photoLocation,
+    //   photoMap: location,
+    // });
   };
 
   if (hasPermission === null) {
@@ -113,103 +121,97 @@ export default CreatePostScreen = () => {
       </View>
     );
   }
-
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.buttonGoBack}
-          onPress={() => navigation.navigate("Post")}
-        >
-          <AntDesign name="arrowleft" color="#BDBDBD" size={24} />
-        </TouchableOpacity>
-        <Text style={styles.title}>Створити публікацію</Text>
-      </View>
-      <View style={styles.body}>
-        <Camera style={styles.camera} type={type} ref={setCameraRef}>
-          <View style={styles.photoView}>
-            <TouchableOpacity
-              style={styles.flipContainer}
-              onPress={() => {
-                setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back
-                );
-              }}
-            >
-              <Ionicons
-                name="camera-reverse-outline"
-                color="#FFFFFF"
-                size={32}
-              />
-            </TouchableOpacity>
-            {photo && (
-              <View style={styles.takePhotoInner}>
-                <Image
-                  source={{ uri: photo }}
-                  style={{
-                    height: 290,
-                    width: 330,
-                  }}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.buttonGoBack}
+            onPress={() => navigation.navigate("Post")}
+          >
+            <AntDesign name="arrowleft" color="#BDBDBD" size={24} />
+          </TouchableOpacity>
+          <Text style={styles.title}>Створити публікацію</Text>
+        </View>
+        <View style={styles.body}>
+          <Camera style={styles.camera} type={type} ref={setCameraRef}>
+            <View style={styles.photoView}>
+              <TouchableOpacity
+                style={styles.flipContainer}
+                onPress={() => {
+                  setType(
+                    type === Camera.Constants.Type.back
+                      ? Camera.Constants.Type.front
+                      : Camera.Constants.Type.back
+                  );
+                }}
+              >
+                <Ionicons
+                  name="camera-reverse-outline"
+                  color="#FFFFFF"
+                  size={32}
                 />
-              </View>
-            )}
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={takePhoto}
-              // {async () => {
-              //   if (cameraRef) {
-              //     const { uri } = await cameraRef.takePictureAsync();
-              //     await MediaLibrary.createAssetAsync(uri);
-              //   }
-              // }}
-            >
-              <View style={styles.takePhotoOut}>
-                <MaterialIcons name="photo-camera" color="#BDBDBD" size={32} />
-              </View>
+              </TouchableOpacity>
+              {photo && (
+                <View style={styles.takePhotoInner}>
+                  <Image
+                    source={{ uri: photo }}
+                    style={{
+                      height: 290,
+                      width: 330,
+                    }}
+                  />
+                </View>
+              )}
+              <TouchableOpacity style={styles.button} onPress={takePhoto}>
+                <View style={styles.takePhotoOut}>
+                  <MaterialIcons
+                    name="photo-camera"
+                    color="#BDBDBD"
+                    size={32}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+          </Camera>
+          <TouchableOpacity onPress={editPhoto}>
+            <Text style={styles.camera_title}>
+              {photo === null ? "Завантажити фото" : "Редагувати фото"}
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.input_container}>
+            <View style={styles.input_section}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setPhotoName}
+                value={photoName}
+                placeholder="Назва..."
+              />
+            </View>
+            <View style={styles.input_section}>
+              <Feather
+                style={styles.location_icon}
+                name="map-pin"
+                color="#BDBDBD"
+                size={24}
+              />
+              <TextInput
+                style={styles.input}
+                onChangeText={setPhotoLocation}
+                value={photoLocation}
+                placeholder="Місцевість..."
+              />
+            </View>
+            <TouchableOpacity style={styles.post_add} onPress={addPost}>
+              <Text style={styles.button_title}>Опублікувати</Text>
             </TouchableOpacity>
           </View>
-        </Camera>
-        <TouchableOpacity onPress={editPhoto}>
-          <Text style={styles.camera_title}>
-            {photo === null ? "Завантажити фото" : "Редагувати фото"}
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.input_container}>
-          <View style={styles.input_section}>
-            <TextInput
-              style={styles.input}
-              onChangeText={setPhotoName}
-              value={photoName}
-              placeholder="Назва..."
-            />
-          </View>
-          <View style={styles.input_section}>
-            <Feather
-              style={styles.location_icon}
-              name="map-pin"
-              color="#BDBDBD"
-              size={24}
-            />
-            <TextInput
-              style={styles.input}
-              onChangeText={setPhotoLocation}
-              value={photoLocation}
-              placeholder="Місцевість..."
-            />
-          </View>
-
-          <TouchableOpacity style={styles.post_add} onPress={addPost}>
-            <Text style={styles.button_title}>Опублікувати</Text>
+          <TouchableOpacity style={styles.button_trash} onPress={resetData}>
+            <Feather name="trash-2" color="#BDBDBD" size={32} />
           </TouchableOpacity>
         </View>
-         <TouchableOpacity style={styles.button_trash} onPress={resetData}>
-          <Feather name="trash-2" color="#BDBDBD" size={32} />
-        </TouchableOpacity>
-      </View>     
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -217,9 +219,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  //  width: 390,
-  camera: {
-    // flex: 1
+  camera: {   
     height: 320,
     borderRadius: 15,
   },
@@ -238,7 +238,6 @@ const styles = StyleSheet.create({
     paddingTop: "65%",
     paddingBottom: "35%",
   },
-
   takePhotoOut: {
     borderWidth: 2,
     borderColor: "white",
@@ -249,21 +248,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 50,
   },
-
   takePhotoInner: {
     position: "absolute",
     top: 15,
     left: 15,
     borderWidth: 2,
     borderColor: "white",
-
-    // height: 30,
-    // width: 30,
-    // backgroundColor: "white",
-    // justifyContent: "center",
-    // alignItems: "center",
   },
-
   header: {
     flex: 1,
     width: "100%",
@@ -322,9 +313,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#BDBDBD",
     paddingTop: 5,
-    marginTop: 20,
-    // borderBottomWidth: 1,
-    // borderBottomColor: "#BDBDBD",
+    marginTop: 20,   
   },
   input_section: {
     flexDirection: "row",
@@ -365,9 +354,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
-    marginTop:30,
+    marginTop: 30,
     marginLeft: "auto",
     marginRight: "auto",
-
   },
 });

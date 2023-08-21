@@ -23,11 +23,10 @@ export default Registration = () => {
   const navigation = useNavigation();
 
   const onRegistered = () => {
-    navigation.navigate("Login")
-    setLogin('');
-    setEmail('');
-    setPassword('');
-
+    navigation.navigate("Login");
+    setLogin("");
+    setEmail("");
+    setPassword("");
 
     Alert.alert(
       "Registration info",
@@ -41,63 +40,64 @@ export default Registration = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <KeyboardAvoidingView
+        {/* <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
+        > */}
+        <ImageBackground
+          style={styles.background}
+          source={require("../components/img/fone.png")}
+          resizeMode="cover"
         >
-          <ImageBackground
-            source={require("../components/img/fone.png")}
-            resizeMode="cover"
-          >
-            <View style={styles.form}>
-              <View style={styles.box}>
-                <View style={styles.photo}></View>
-                <TouchableOpacity>
-                  <Image
-                    style={styles.img}
-                    source={require("../components/img/add.png")}
-                  />
-                </TouchableOpacity>
-              </View>
-              <Text style={styles.title}>Реєстрація</Text>
-
-              <TextInput
-                style={styles.input}
-                onChangeText={setLogin}
-                value={login}
-                placeholder="  Логін"
-              />
-              <TextInput
-                style={styles.input}
-                onChangeText={setEmail}
-                value={email}
-                placeholder="  Адреса електронної пошти"
-              />
-              <TextInput
-                style={styles.input}
-                onChangeText={setPassword}
-                value={password}
-                secureTextEntry
-                placeholder="  Пароль"
-              />
-
-              <TouchableOpacity style={styles.buton} onPress={onRegistered}>
-                <Text style={styles.title_button}>Зареєструватися</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.link}
-                onPress={() =>
-                  navigation.navigate("Login", {
-                    sessionId: 45,
-                    login: `${login}`,
-                    email: `${email}`,
-                  })
-                }
-              >
-                <Text style={styles.title_link}>Вже є акаунт? Увійти</Text>
+          <View style={styles.form}>
+            <View style={styles.box}>
+              <View style={styles.photo}></View>
+              <TouchableOpacity>
+                <Image
+                  style={styles.img}
+                  source={require("../components/img/add.png")}
+                />
               </TouchableOpacity>
             </View>
-          </ImageBackground>
-        </KeyboardAvoidingView>
+            <Text style={styles.title}>Реєстрація</Text>
+
+            <TextInput
+              style={styles.input}
+              onChangeText={setLogin}
+              value={login}
+              placeholder="  Логін"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setEmail}
+              value={email}
+              placeholder="  Адреса електронної пошти"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry
+              placeholder="  Пароль"
+            />
+
+            <TouchableOpacity style={styles.buton} onPress={onRegistered}>
+              <Text style={styles.title_button}>Зареєструватися</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.link}
+              onPress={() =>
+                navigation.navigate("Login", {
+                  sessionId: 45,
+                  login: `${login}`,
+                  email: `${email}`,
+                })
+              }
+            >
+              <Text style={styles.title_link}>Вже є акаунт? Увійти</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+        {/* </KeyboardAvoidingView> */}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -105,32 +105,32 @@ export default Registration = () => {
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
+    height: "100%",
+  },
+  background: {
     flex: 1,
-    // height: 700,
-    width: 395,
-    // alignItems: "center",
-    // justifyContent: "center",
-    // margin: 0,
-    // padding: 0,
   },
   form: {
-    // flex:1,
     backgroundColor: "#FFFFFF",
+    height: "65%",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 15,
+    display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    // paddingTop: 10,
-    marginTop: 250,
-    paddingBottom: 80,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
   },
   title: {
     fontSize: 30,
     fontWeight: 500,
     textAlign: "center",
-    paddingTop: 25,
+    paddingTop: 60,
     paddingBottom: 25,
     borderRadius: 50,
+    color: "#1B4371",
   },
   title_button: {
     fontSize: 16,
@@ -167,10 +167,7 @@ const styles = StyleSheet.create({
   },
   box: {
     marginTop: -60,
-    // zIndex: 2,
-    // position: "absolute",
-    // top: 170,
-    // left: 135,
+    position: "absolute",
   },
   photo: {
     width: 120,
@@ -188,6 +185,3 @@ const styles = StyleSheet.create({
     left: 105,
   },
 });
-
-
-
